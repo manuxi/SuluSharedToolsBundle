@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Manuxi\SuluSharedTools\Entity\Traits;
+namespace Manuxi\SuluSharedToolsBundle\Entity\Traits;
 
 use JMS\Serializer\Annotation as Serializer;
 use Sulu\Bundle\MediaBundle\Entity\MediaInterface;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Manuxi\SuluSharedTools\Entity\Interfaces;
+namespace Manuxi\SuluSharedToolsBundle\Entity\Interfaces;
 
 use Doctrine\Common\Collections\Collection;
 use Sulu\Bundle\CategoryBundle\Entity\CategoryInterface;

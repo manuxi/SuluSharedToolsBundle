@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Manuxi\SuluSharedTools\Entity\Traits;
+namespace Manuxi\SuluSharedToolsBundle\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 use Sulu\Bundle\ContactBundle\Entity\ContactInterface;

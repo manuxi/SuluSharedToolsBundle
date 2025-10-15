@@ -1,6 +1,6 @@
 <?php
 
-namespace Manuxi\SuluSharedTools\Entity\Traits;
+namespace Manuxi\SuluSharedToolsBundle\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;

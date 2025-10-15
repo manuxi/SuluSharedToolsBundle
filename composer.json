@@ -1,9 +1,8 @@
 {
-    "name": "manuxi/sulu-shared-tools",
+    "name": "manuxi/sulu-shared-tools-bundle",
     "description": "Tools for Sulu bundles.",
-    "version": "0.0.1",
-    "type": "library",
-    "homepage": "https://github.com/manuxi/SuluSharedTools",
+    "type": "symfony-bundle",
+    "homepage": "https://github.com/manuxi/SuluSharedToolsBundle",
     "license": "MIT",
     "require": {
         "php": "^8.1",
@@ -21,12 +20,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Manuxi\\SuluSharedTools\\": "src/"
+            "Manuxi\\SuluSharedToolsBundle\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Manuxi\\SuluSharedTools\\Tests\\": "tests/"
+            "Manuxi\\SuluSharedToolsBundle\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -34,6 +33,11 @@
             "@phpunit"
         ],
         "phpunit": "vendor/bin/phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.0-dev"
+        }
     },
     "config": {
         "allow-plugins": {

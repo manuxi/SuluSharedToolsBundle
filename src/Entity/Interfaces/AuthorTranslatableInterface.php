@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Manuxi\SuluSharedTools\Entity\Interfaces;
+namespace Manuxi\SuluSharedToolsBundle\Entity\Interfaces;
 
 use Sulu\Bundle\ContactBundle\Entity\ContactInterface;
 

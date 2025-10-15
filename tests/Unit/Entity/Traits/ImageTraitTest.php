@@ -1,8 +1,8 @@
 <?php
 
-namespace Manuxi\SuluSharedTools\Tests\Unit\Entity\Traits;
+namespace Manuxi\SuluSharedToolsBundle\Tests\Unit\Entity\Traits;
 
-use Manuxi\SuluSharedTools\Entity\Traits\ImageTrait;
+use Manuxi\SuluSharedToolsBundle\Entity\Traits\ImageTrait;
 use Sulu\Bundle\MediaBundle\Entity\Media;
 use Sulu\Bundle\TestBundle\Testing\SuluTestCase;
 

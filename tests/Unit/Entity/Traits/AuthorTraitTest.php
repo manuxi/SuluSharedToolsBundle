@@ -2,7 +2,7 @@
 
 namespace Unit\Entity\Traits;
 
-use Manuxi\SuluSharedTools\Entity\Traits\AuthorTrait;
+use Manuxi\SuluSharedToolsBundle\Entity\Traits\AuthorTrait;
 use Sulu\Bundle\ContactBundle\Entity\Contact;
 use Sulu\Bundle\TestBundle\Testing\SuluTestCase;
 

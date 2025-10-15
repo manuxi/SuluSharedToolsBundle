@@ -1,8 +1,8 @@
 <?php
 
-namespace Manuxi\SuluSharedTools\Tests\Unit\Entity\Traits;
+namespace Manuxi\SuluSharedToolsBundle\Tests\Unit\Entity\Traits;
 
-use Manuxi\SuluSharedTools\Entity\Traits\ExcerptTrait;
+use Manuxi\SuluSharedToolsBundle\Entity\Traits\ExcerptTrait;
 use Sulu\Bundle\TestBundle\Testing\SuluTestCase;
 
 class ExcerptTraitTest extends SuluTestCase

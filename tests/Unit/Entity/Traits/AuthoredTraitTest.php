@@ -1,9 +1,9 @@
 <?php
 
-namespace Manuxi\SuluSharedTools\Tests\Unit\Entity\Traits;
+namespace Manuxi\SuluSharedToolsBundle\Tests\Unit\Entity\Traits;
 
 use DateTime;
-use Manuxi\SuluSharedTools\Entity\Traits\AuthoredTrait;
+use Manuxi\SuluSharedToolsBundle\Entity\Traits\AuthoredTrait;
 use Sulu\Bundle\TestBundle\Testing\SuluTestCase;
 
 class AuthoredTraitTest extends SuluTestCase

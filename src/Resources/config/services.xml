@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+                               https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="sulu_shared_tools.country_code_select"
+                 class="Manuxi\SuluSharedToolsBundle\Service\CountryCodeSelect"
+                 public="true"/>
+
+        <service id="sulu_shared_tools.webspace_selector"
+                 class="Manuxi\SuluSharedToolsBundle\Admin\Helper\WebspaceSelector"
+                 public="true">
+            <argument type="service" id="sulu_core.webspace.webspace_manager"/>
+        </service>
+    </services>
+</container>
