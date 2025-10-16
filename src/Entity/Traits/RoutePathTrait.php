@@ -5,7 +5,7 @@ namespace Manuxi\SuluSharedToolsBundle\Entity\Traits;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-trait RouteTrait
+trait RoutePathTrait
 {
 
     #[ORM\Column(type: Types::STRING, length: 255)]

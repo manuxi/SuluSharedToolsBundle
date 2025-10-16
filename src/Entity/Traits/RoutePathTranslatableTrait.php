@@ -6,7 +6,7 @@ namespace Manuxi\SuluSharedToolsBundle\Entity\Traits;
 
 use JMS\Serializer\Annotation as Serializer;
 
-trait RouteTranslatableTrait
+trait RoutePathTranslatableTrait
 {
     abstract public function getLocale();
     abstract protected function getTranslation(string $locale);
