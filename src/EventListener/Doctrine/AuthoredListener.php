@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Manuxi\SuluArchiveBundle\EventListener\Doctrine;
+namespace Manuxi\SuluSharedToolsBundle\EventListener\Doctrine;
 
 use Doctrine\ORM\Mapping\MappingException;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
@@ -11,12 +11,12 @@ use Manuxi\SuluSharedToolsBundle\Entity\Interfaces\AuthoredInterface;
 
 class AuthoredListener
 {
-    const AUTHORED_PROPERTY_NAME = 'authored';
+    public const AUTHORED_PROPERTY_NAME = 'authored';
 
     /**
      * Load the class data, mapping the authored field
      * to datetime.
-     * @param LoadClassMetadataEventArgs $args
+     *
      * @throws MappingException
      */
     public function loadClassMetadata(LoadClassMetadataEventArgs $args)

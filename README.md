@@ -1,8 +1,9 @@
 # SuluSharedToolsBundle!
 ![php workflow](https://github.com/manuxi/SuluSharedToolsBundle/actions/workflows/php.yml/badge.svg)
 ![symfony workflow](https://github.com/manuxi/SuluSharedToolsBundle/actions/workflows/symfony.yml/badge.svg)
-<a href="https://github.com/manuxi/SuluSharedToolsBundle/tags" target="_blank">
-<img src="https://img.shields.io/github/v/tag/manuxi/SuluSharedToolsBundle" alt="GitHub license">
-</a>
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/manuxi/SuluSharedToolsBundle/LICENSE)
+![GitHub Tag](https://img.shields.io/github/v/tag/manuxi/SuluSharedToolsBundle)
+![Supports Sulu 2.6 or later](https://img.shields.io/badge/%20Sulu-2.6-0088cc)
 
-This bundle has some Traits/interfaces/services in it to reduce duplicate code in my Bundles. 
+HelperBundle
+Some Helpers, Services, Traits, Interfaces, etc. to reduce duplicate code in my Bundles. 

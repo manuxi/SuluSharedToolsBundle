@@ -14,5 +14,17 @@
                  public="true">
             <argument type="service" id="sulu_core.webspace.webspace_manager"/>
         </service>
+
+        <service id="sulu_shared_tools.persistence.event_listener.doctrine.author" class="Manuxi\SuluSharedToolsBundle\EventListener\Doctrine\AuthorListener">
+            <argument>%sulu.model.contact.class%</argument>
+            <argument type="service" id="security.token_storage" on-invalid="null"/>
+            <tag name="doctrine.event_listener" event="loadClassMetadata"/>
+            <tag name="doctrine.event_listener" event="onFlush"/>
+        </service>
+        <service id="sulu_shared_tools.persistence.event_listener.doctrine.authored" class="Manuxi\SuluSharedToolsBundle\EventListener\Doctrine\AuthoredListener">
+            <tag name="doctrine.event_listener" event="loadClassMetadata"/>
+            <tag name="doctrine.event_listener" event="preUpdate"/>
+            <tag name="doctrine.event_listener" event="prePersist"/>
+        </service>
     </services>
 </container>

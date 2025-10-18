@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Manuxi\SuluArchiveBundle\EventListener\Doctrine;
+namespace Manuxi\SuluSharedToolsBundle\EventListener\Doctrine;
 
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\Persistence\Event\LoadClassMetadataEventArgs;
@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class AuthorListener
 {
-    const AUTHOR_PROPERTY_NAME = 'author';
+    public const AUTHOR_PROPERTY_NAME = 'author';
 
     private string $userClass;
     private ?TokenStorageInterface $tokenStorage;
@@ -118,5 +118,4 @@ class AuthorListener
 
         return $user;
     }
-
 }

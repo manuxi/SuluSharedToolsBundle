@@ -2,37 +2,37 @@
 
 namespace Manuxi\SuluSharedToolsBundle\Tests\Unit\Entity\Traits;
 
-use Manuxi\SuluSharedToolsBundle\Entity\Traits\ImageTrait;
+use Manuxi\SuluSharedToolsBundle\Entity\Traits\DocumentTrait;
 use Sulu\Bundle\MediaBundle\Entity\Media;
 use Sulu\Bundle\TestBundle\Testing\SuluTestCase;
 
-class ImageTraitTest extends SuluTestCase
+class DocumentTraitTest extends SuluTestCase
 {
     private $mock;
-    private $image;
+    private $document;
 
     protected function setUp(): void
     {
-        $this->image = $this->prophesize(Media::class);
-        $this->mock  = $this->getMockForTrait(ImageTrait::class);
+        $this->document = $this->prophesize(Media::class);
+        $this->mock  = $this->getMockForTrait(DocumentTrait::class);
     }
 
-    public function testSetImage(): void
+    public function testSetDocument(): void
     {
-        $this->assertSame($this->mock, $this->mock->setImage($this->image->reveal()));
+        $this->assertSame($this->mock, $this->mock->setDocument($this->document->reveal()));
     }
 
-    public function testGetImage(): void
+    public function testGetDocument(): void
     {
-        $this->mock->setImage($this->image->reveal());
-        $this->assertSame($this->image->reveal(), $this->mock->getImage());
+        $this->mock->setDocument($this->document->reveal());
+        $this->assertSame($this->document->reveal(), $this->mock->getDocument());
     }
 
-    public function testGetImageData(): void
+    public function testGetDocumentData(): void
     {
-        $this->image->getId()->willReturn(42);
-        $this->assertNull($this->mock->getImageData());
-        $this->mock->setImage($this->image->reveal());
-        $this->assertSame(['id' => 42], $this->mock->getImageData());
+        $this->document->getId()->willReturn(42);
+        $this->assertNull($this->mock->getDocumentData());
+        $this->mock->setDocument($this->document->reveal());
+        $this->assertSame(['id' => 42], $this->mock->getDocumentData());
     }
 }

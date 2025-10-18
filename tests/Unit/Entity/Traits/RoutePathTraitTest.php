@@ -2,37 +2,25 @@
 
 namespace Manuxi\SuluSharedToolsBundle\Tests\Unit\Entity\Traits;
 
-use Manuxi\SuluSharedToolsBundle\Entity\Traits\DocumentTrait;
-use Sulu\Bundle\MediaBundle\Entity\Media;
+use Manuxi\SuluSharedToolsBundle\Entity\Traits\RoutePathTrait;
 use Sulu\Bundle\TestBundle\Testing\SuluTestCase;
 
-class DocumentTraitTest extends SuluTestCase
+class RoutePathTraitTest extends SuluTestCase
 {
     private $mock;
-    private $document;
+
 
     protected function setUp(): void
     {
-        $this->document = $this->prophesize(Media::class);
-        $this->mock  = $this->getMockForTrait(DocumentTrait::class);
+        $this->mock  = $this->getMockForTrait(RoutePathTrait::class);
     }
 
-    public function testSetDocument(): void
+    public function testRoutePath(): void
     {
-        $this->assertSame($this->mock, $this->mock->setDocument($this->document->reveal()));
+        $test = '/this/is/my/new/path/';
+        $this->assertNull($this->mock->getRoutePath());
+        $this->mock->setRoutePath($test);
+        $this->assertSame($this->mock->getRoutePath(), $test);
     }
 
-    public function testGetDocument(): void
-    {
-        $this->mock->setDocument($this->document->reveal());
-        $this->assertSame($this->document->reveal(), $this->mock->getDocument());
-    }
-
-    public function testGetDocumentData(): void
-    {
-        $this->document->getId()->willReturn(42);
-        $this->assertNull($this->mock->getDocumentData());
-        $this->mock->setDocument($this->document->reveal());
-        $this->assertSame(['id' => 42], $this->mock->getDocumentData());
-    }
 }
