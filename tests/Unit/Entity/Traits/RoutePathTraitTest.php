@@ -18,7 +18,7 @@ class RoutePathTraitTest extends SuluTestCase
     public function testRoutePath(): void
     {
         $test = '/this/is/my/new/path/';
-        $this->assertNull($this->mock->getRoutePath());
+        $this->assertEmpty($this->mock->getRoutePath());
         $this->mock->setRoutePath($test);
         $this->assertSame($this->mock->getRoutePath(), $test);
     }
