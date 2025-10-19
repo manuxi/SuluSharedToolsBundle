@@ -5,6 +5,7 @@
                                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+        <!-- tools -->
         <service id="sulu_shared_tools.country_code_select"
                  class="Manuxi\SuluSharedToolsBundle\Service\CountryCodeSelect"
                  public="true"/>
@@ -15,6 +16,13 @@
             <argument type="service" id="sulu_core.webspace.webspace_manager"/>
         </service>
 
+        <!-- search subscriber -->
+        <service id="sulu_shared_tools.search_subscriber" class="Manuxi\SuluSharedToolsBundle\Search\SearchSubscriber">
+            <argument type="service" id="massive_search.search_manager"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <!-- listener -->
         <service id="sulu_shared_tools.persistence.event_listener.doctrine.author" class="Manuxi\SuluSharedToolsBundle\EventListener\Doctrine\AuthorListener">
             <argument>%sulu.model.contact.class%</argument>
             <argument type="service" id="security.token_storage" on-invalid="null"/>

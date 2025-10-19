@@ -9,10 +9,9 @@ class RoutePathTraitTest extends SuluTestCase
 {
     private $mock;
 
-
     protected function setUp(): void
     {
-        $this->mock  = $this->getMockForTrait(RoutePathTrait::class);
+        $this->mock = $this->getMockForTrait(RoutePathTrait::class);
     }
 
     public function testRoutePath(): void
@@ -22,5 +21,4 @@ class RoutePathTraitTest extends SuluTestCase
         $this->mock->setRoutePath($test);
         $this->assertSame($this->mock->getRoutePath(), $test);
     }
-
 }
