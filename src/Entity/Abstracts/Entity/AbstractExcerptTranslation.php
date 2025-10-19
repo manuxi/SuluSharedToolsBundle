@@ -33,24 +33,12 @@ abstract class AbstractExcerptTranslation
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     protected ?string $description = null;
 
-    #[ManyToMany(targetEntity: Category::class)]
-    #[JoinColumn(name: 'excerpt_id', referencedColumnName: 'id')]
-    #[InverseJoinColumn(name: 'category_id', referencedColumnName: 'id')]
     protected ?Collection $categories = null;
 
-    #[ManyToMany(targetEntity: TagInterface::class)]
-    #[JoinColumn(name: 'excerpt_id', referencedColumnName: 'id')]
-    #[InverseJoinColumn(name: 'tag_id', referencedColumnName: 'id')]
     protected ?Collection $tags = null;
 
-    #[ManyToMany(targetEntity: MediaInterface::class)]
-    #[JoinColumn(name: 'excerpt_id', referencedColumnName: 'id')]
-    #[InverseJoinColumn(name: 'icon_id', referencedColumnName: 'id')]
     protected ?Collection $icons = null;
 
-    #[ManyToMany(targetEntity: MediaInterface::class)]
-    #[JoinColumn(name: 'excerpt_id', referencedColumnName: 'id')]
-    #[InverseJoinColumn(name: 'image_id', referencedColumnName: 'id')]
     protected ?Collection $images = null;
 
     /**
@@ -161,7 +149,21 @@ abstract class AbstractExcerptTranslation
 
         if (null !== $this->getCategories()) {
             foreach ($this->getCategories() as $category) {
-                $categories[$category->getId()] = $category;
+                $categories[] = $category->getId();
+            }
+        }
+
+        return $categories;
+    }
+
+    public function getCategoryNames(): array
+    {
+        $categories = [];
+
+        if (null !== $this->getCategories()) {
+            /* @var Category $categories */
+            foreach ($this->getCategories() as $category) {
+                $categories[$category->getId()] = $category->findTranslationByLocale($this->locale);
             }
         }
 

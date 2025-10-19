@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Manuxi\SuluSharedToolsBundle\Entity\Traits;
 
+use Doctrine\Common\Collections\Collection;
 use JMS\Serializer\Annotation as Serializer;
 use Sulu\Bundle\CategoryBundle\Entity\CategoryInterface;
 use Sulu\Bundle\MediaBundle\Entity\MediaInterface;
@@ -109,6 +110,16 @@ trait ExcerptTranslatableTrait
             return null;
         }
         return $translation->getCategoryIds();
+    }
+
+    #[Serializer\VirtualProperty(name: "categories_named")]
+    public function getCategoriesNamed(): ?array
+    {
+        $translation = $this->getTranslation($this->locale);
+        if (!$translation) {
+            return null;
+        }
+        return $translation->getCategoryNames();
     }
 
     public function addCategory(CategoryInterface $category): self
