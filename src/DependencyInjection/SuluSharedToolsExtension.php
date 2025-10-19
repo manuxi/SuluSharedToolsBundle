@@ -17,4 +17,17 @@ class SuluSharedToolsExtension extends Extension
         );
         $loader->load('services.xml');
     }
+
+    public function prepend(ContainerBuilder $container): void
+    {
+        if ($container->hasExtension('framework')) {
+            $container->prependExtensionConfig('framework', [
+                'translator' => [
+                    'paths' => [
+                        __DIR__ . '/../Resources/translations',
+                    ],
+                ],
+            ]);
+        }
+    }
 }

@@ -5,10 +5,14 @@
                                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <!-- tools -->
+        <!-- services -->
         <service id="sulu_shared_tools.country_code_select"
                  class="Manuxi\SuluSharedToolsBundle\Service\CountryCodeSelect"
                  public="true"/>
+
+        <service id="sulu_shared_tools.default_color_select" class="Manuxi\SuluSharedToolsBundle\Service\DefaultColorSelect" public="true">
+            <argument type="service" id="translator.default"/>
+        </service>
 
         <service id="sulu_shared_tools.webspace_selector"
                  class="Manuxi\SuluSharedToolsBundle\Admin\Helper\WebspaceSelector"

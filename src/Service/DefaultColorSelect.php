@@ -2,26 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Manuxi\SuluNewsBundle\Service;
+namespace Manuxi\SuluSharedToolsBundle\Service;
 
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class NewsTypeSelect
+class DefaultColorSelect
 {
-
     private array $typesMap = [
-        'default'       => 'sulu_news.types.default',
-        'article'       => 'sulu_news.types.article',
-        'blog'          => 'sulu_news.types.blog',
-        'faq'           => 'sulu_news.types.faq',
-        'notice'        => 'sulu_news.types.notice',
-        'announcement'  => 'sulu_news.types.announcement',
-        'rating'        => 'sulu_news.types.rating',
+        'primary' => 'sulu_shared_tools.service.default_color_select.primary',
+        'secondary' => 'sulu_shared_tools.service.default_color_select.secondary',
+        'success' => 'sulu_shared_tools.service.default_color_select.success',
+        'danger' => 'sulu_shared_tools.service.default_color_select.danger',
+        'warning' => 'sulu_shared_tools.service.default_color_select.warning',
+        'info' => 'sulu_shared_tools.service.default_color_select.info',
+        'dark' => 'sulu_shared_tools.service.default_color_select.dark',
+        'light' => 'sulu_shared_tools.service.default_color_select.light',
     ];
-    private string $defaultValue = 'default';
+    private string $defaultValue = 'light';
 
-    public function __construct(private TranslatorInterface $translator)
-    {}
+    public function __construct(private readonly TranslatorInterface $translator)
+    {
+    }
 
     public function getValues(): array
     {

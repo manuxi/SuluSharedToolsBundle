@@ -1,0 +1,11 @@
+sulu_shared_tools:
+    service:
+        default_color_select:
+            primary: Primärfarbe
+            secondary: Sekundärfarbe
+            success: Erfolg
+            danger: Gefahr
+            warning: Warnung
+            info: Info
+            dark: Dunkel
+            light: Hell

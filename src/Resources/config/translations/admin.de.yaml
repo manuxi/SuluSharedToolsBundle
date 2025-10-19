@@ -1,4 +1,0 @@
-sulu_shared_tools:
-    service:
-        default_color_select:
-            primary: Primärfarbe

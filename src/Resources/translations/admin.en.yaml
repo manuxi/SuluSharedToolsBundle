@@ -1,0 +1,11 @@
+sulu_shared_tools:
+    service:
+        default_color_select:
+            primary: Primary
+            secondary: Secondary
+            success: Success
+            danger: Danger
+            warning: Warning
+            info: Info
+            dark: Dark
+            light: Light
