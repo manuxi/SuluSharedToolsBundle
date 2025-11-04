@@ -10,9 +10,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 trait UserBlameTranslatableTrait
 {
     abstract public function getLocale();
+
     abstract protected function getTranslation(string $locale);
 
-    #[Serializer\VirtualProperty(name: "creator")]
+    #[Serializer\VirtualProperty(name: 'creator')]
     public function getCreator(): ?int
     {
         $translation = $this->getTranslation($this->getLocale());
@@ -31,10 +32,11 @@ trait UserBlameTranslatableTrait
         }
 
         $translation->setCreator($creator);
+
         return $this;
     }
 
-    #[Serializer\VirtualProperty(name: "changer")]
+    #[Serializer\VirtualProperty(name: 'changer')]
     public function getChanger(): ?int
     {
         $translation = $this->getTranslation($this->getLocale());
@@ -53,6 +55,45 @@ trait UserBlameTranslatableTrait
         }
 
         $translation->setChanger($author);
+
         return $this;
+    }
+
+    #[Serializer\VirtualProperty(name: 'creatorName')]
+    public function getCreatorName(): ?string
+    {
+        $translation = $this->getTranslation($this->getLocale());
+        if (!$translation) {
+            return null;
+        }
+
+        $creator = $translation->getCreator();
+        if (!$creator) {
+            return null;
+        }
+
+        // User has getContact()->getFullName()
+        $contact = $creator->getContact();
+
+        return $contact ? $contact->getFullName() : $creator->getUsername();
+    }
+
+    #[Serializer\VirtualProperty(name: 'changerName')]
+    public function getChangerName(): ?string
+    {
+        $translation = $this->getTranslation($this->getLocale());
+        if (!$translation) {
+            return null;
+        }
+
+        $changer = $translation->getChanger();
+        if (!$changer) {
+            return null;
+        }
+
+        // User has getContact()->getFullName()
+        $contact = $changer->getContact();
+
+        return $contact ? $contact->getFullName() : $changer->getUsername();
     }
 }

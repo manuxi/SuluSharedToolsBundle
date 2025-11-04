@@ -10,9 +10,10 @@ use Sulu\Bundle\ContactBundle\Entity\ContactInterface;
 trait AuthorTranslatableTrait
 {
     abstract public function getLocale();
+
     abstract protected function getTranslation(string $locale);
 
-    #[Serializer\VirtualProperty(name: "author")]
+    #[Serializer\VirtualProperty(name: 'author')]
     public function getAuthor(): ?int
     {
         $translation = $this->getTranslation($this->getLocale());
@@ -31,6 +32,7 @@ trait AuthorTranslatableTrait
         }
 
         $translation->setAuthor($author);
+
         return $this;
     }
 }
