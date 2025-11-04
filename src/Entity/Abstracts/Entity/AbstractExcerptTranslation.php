@@ -161,9 +161,9 @@ abstract class AbstractExcerptTranslation
         $categories = [];
 
         if (null !== $this->getCategories()) {
-            /* @var Category $categories */
+            /* @var Category $category */
             foreach ($this->getCategories() as $category) {
-                $categories[$category->getId()] = $category->findTranslationByLocale($this->locale);
+                $categories[$category->getId()] = $category->findTranslationByLocale($this->locale)->getTranslation();
             }
         }
 
