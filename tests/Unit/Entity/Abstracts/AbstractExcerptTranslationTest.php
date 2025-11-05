@@ -81,8 +81,8 @@ class AbstractExcerptTranslationTest extends SuluTestCase
 
         $ids = $this->mock->getCategoryIds();
         $this->assertIsArray($ids);
-        $this->assertTrue(\array_key_exists(42, $ids));
-        $this->assertTrue(\array_key_exists(43, $ids));
+        $this->assertContains(42, $ids);
+        $this->assertContains(43, $ids);
 
         $this->assertSame($this->mock, $this->mock->removeCategory($categoryB->reveal()));
         $this->assertSame(1, $this->mock->getCategories()->count());
@@ -93,6 +93,207 @@ class AbstractExcerptTranslationTest extends SuluTestCase
         $this->assertSame(0, $this->mock->getCategories()->count());
 
         $this->assertTrue([] === $this->mock->getCategoryIds());
+    }
+
+    public function testGetCategoryNamesReturnsEmptyArrayWhenNoCategoriesSet(): void
+    {
+        $this->assertSame([], $this->mock->getCategoryNames());
+    }
+
+    public function testGetCategoryNamesReturnsCorrectNamesWithIds(): void
+    {
+        $translationA = $this->prophesize(\Sulu\Bundle\CategoryBundle\Entity\CategoryTranslation::class);
+        $translationA->getTranslation()->willReturn('Technology');
+
+        $categoryA = $this->prophesize(Category::class);
+        $categoryA->getId()->willReturn(42);
+        $categoryA->findTranslationByLocale('en')->willReturn($translationA->reveal());
+
+        $translationB = $this->prophesize(\Sulu\Bundle\CategoryBundle\Entity\CategoryTranslation::class);
+        $translationB->getTranslation()->willReturn('News');
+
+        $categoryB = $this->prophesize(Category::class);
+        $categoryB->getId()->willReturn(43);
+        $categoryB->findTranslationByLocale('en')->willReturn($translationB->reveal());
+
+        $this->mock->addCategory($categoryA->reveal());
+        $this->mock->addCategory($categoryB->reveal());
+
+        $names = $this->mock->getCategoryNames();
+
+        $this->assertIsArray($names);
+        $this->assertCount(2, $names);
+        $this->assertArrayHasKey(42, $names);
+        $this->assertArrayHasKey(43, $names);
+        $this->assertSame('Technology', $names[42]);
+        $this->assertSame('News', $names[43]);
+    }
+
+    public function testGetCategoryNamesUsesCorrectLocale(): void
+    {
+        $translationDe = $this->prophesize(\Sulu\Bundle\CategoryBundle\Entity\CategoryTranslation::class);
+        $translationDe->getTranslation()->willReturn('Technologie');
+
+        $categoryA = $this->prophesize(Category::class);
+        $categoryA->getId()->willReturn(42);
+        $categoryA->findTranslationByLocale('de')->willReturn($translationDe->reveal());
+
+        $this->mock->setLocale('de');
+        $this->mock->addCategory($categoryA->reveal());
+
+        $names = $this->mock->getCategoryNames();
+
+        $this->assertSame('Technologie', $names[42]);
+    }
+
+    public function testGetCategoryNamesWithMultipleLocales(): void
+    {
+        // Test mit verschiedenen Locales
+        $locales = ['en', 'de', 'fr'];
+        $expectedNames = [
+            'en' => 'Technology',
+            'de' => 'Technologie',
+            'fr' => 'Technologie'
+        ];
+
+        foreach ($locales as $locale) {
+            $translation = $this->prophesize(\Sulu\Bundle\CategoryBundle\Entity\CategoryTranslation::class);
+            $translation->getTranslation()->willReturn($expectedNames[$locale]);
+
+            $category = $this->prophesize(Category::class);
+            $category->getId()->willReturn(100);
+            $category->findTranslationByLocale($locale)->willReturn($translation->reveal());
+
+            // Fresh mock für jede Iteration
+            $mock = $this->getMockForAbstractClass(AbstractExcerptTranslation::class);
+            $mock->setLocale($locale);
+            $mock->addCategory($category->reveal());
+
+            $names = $mock->getCategoryNames();
+
+            $this->assertSame($expectedNames[$locale], $names[100], "Failed for locale: $locale");
+        }
+    }
+
+    public function testGetCategoryNamesPreservesIdAsKey(): void
+    {
+        $translation = $this->prophesize(\Sulu\Bundle\CategoryBundle\Entity\CategoryTranslation::class);
+        $translation->getTranslation()->willReturn('Some Category');
+
+        $category = $this->prophesize(Category::class);
+        $category->getId()->willReturn(999);
+        $category->findTranslationByLocale('en')->willReturn($translation->reveal());
+
+        $this->mock->addCategory($category->reveal());
+
+        $names = $this->mock->getCategoryNames();
+
+        // Key muss die ID sein, nicht ein numerischer Index
+        $this->assertTrue(array_key_exists(999, $names));
+        $this->assertFalse(array_key_exists(0, $names));
+    }
+
+    public function testGetCategoryNamesHandlesSpecialCharacters(): void
+    {
+        $testString = 'Umläütè & Söndérzeichen™ 😊😁';
+
+        $translation = $this->prophesize(\Sulu\Bundle\CategoryBundle\Entity\CategoryTranslation::class);
+        $translation->getTranslation()->willReturn($testString);
+
+        $category = $this->prophesize(Category::class);
+        $category->getId()->willReturn(42);
+        $category->findTranslationByLocale('de')->willReturn($translation->reveal());
+
+        $this->mock->setLocale('de');
+        $this->mock->addCategory($category->reveal());
+
+        $names = $this->mock->getCategoryNames();
+
+        $this->assertSame($testString, $names[42]);
+    }
+
+    public function testGetCategoryNamesAfterRemovingCategories(): void
+    {
+        $translationA = $this->prophesize(\Sulu\Bundle\CategoryBundle\Entity\CategoryTranslation::class);
+        $translationA->getTranslation()->willReturn('Category A');
+
+        $categoryA = $this->prophesize(Category::class);
+        $categoryA->getId()->willReturn(1);
+        $categoryA->findTranslationByLocale('en')->willReturn($translationA->reveal());
+
+        $translationB = $this->prophesize(\Sulu\Bundle\CategoryBundle\Entity\CategoryTranslation::class);
+        $translationB->getTranslation()->willReturn('Category B');
+
+        $categoryB = $this->prophesize(Category::class);
+        $categoryB->getId()->willReturn(2);
+        $categoryB->findTranslationByLocale('en')->willReturn($translationB->reveal());
+
+        $this->mock->addCategory($categoryA->reveal());
+        $this->mock->addCategory($categoryB->reveal());
+
+        $this->assertCount(2, $this->mock->getCategoryNames());
+
+        $this->mock->removeCategory($categoryB->reveal());
+
+        $names = $this->mock->getCategoryNames();
+        $this->assertCount(1, $names);
+        $this->assertArrayHasKey(1, $names);
+        $this->assertArrayNotHasKey(2, $names);
+        $this->assertSame('Category A', $names[1]);
+    }
+
+    public function testGetCategoryNamesAfterRemovingAllCategories(): void
+    {
+        $translation = $this->prophesize(\Sulu\Bundle\CategoryBundle\Entity\CategoryTranslation::class);
+        $translation->getTranslation()->willReturn('Category');
+
+        $category = $this->prophesize(Category::class);
+        $category->getId()->willReturn(1);
+        $category->findTranslationByLocale('en')->willReturn($translation->reveal());
+
+        $this->mock->addCategory($category->reveal());
+        $this->assertCount(1, $this->mock->getCategoryNames());
+
+        $this->mock->removeCategories();
+
+        $this->assertSame([], $this->mock->getCategoryNames());
+    }
+
+    public function testGetCategoryNamesWithEmptyTranslation(): void
+    {
+        $translation = $this->prophesize(\Sulu\Bundle\CategoryBundle\Entity\CategoryTranslation::class);
+        $translation->getTranslation()->willReturn('');
+
+        $category = $this->prophesize(Category::class);
+        $category->getId()->willReturn(42);
+        $category->findTranslationByLocale('en')->willReturn($translation->reveal());
+
+        $this->mock->addCategory($category->reveal());
+
+        $names = $this->mock->getCategoryNames();
+
+        $this->assertSame('', $names[42]);
+    }
+
+    public function testGetCategoryNamesPerformanceWithManyCategories(): void
+    {
+        for ($i = 1; $i <= 50; $i++) {
+            $translation = $this->prophesize(\Sulu\Bundle\CategoryBundle\Entity\CategoryTranslation::class);
+            $translation->getTranslation()->willReturn("Category $i");
+
+            $category = $this->prophesize(Category::class);
+            $category->getId()->willReturn($i);
+            $category->findTranslationByLocale('en')->willReturn($translation->reveal());
+
+            $this->mock->addCategory($category->reveal());
+        }
+
+        $startTime = microtime(true);
+        $names = $this->mock->getCategoryNames();
+        $endTime = microtime(true);
+
+        $this->assertCount(50, $names);
+        $this->assertLessThan(0.1, $endTime - $startTime, 'Method should execute quickly even with 50 categories');
     }
 
     public function testTags(): void
