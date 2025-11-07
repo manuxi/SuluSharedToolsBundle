@@ -6,9 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\InverseJoinColumn;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\ManyToMany;
 use Sulu\Bundle\CategoryBundle\Entity\Category;
 use Sulu\Bundle\CategoryBundle\Entity\CategoryInterface;
 use Sulu\Bundle\MediaBundle\Entity\MediaInterface;
@@ -163,7 +160,9 @@ abstract class AbstractExcerptTranslation
         if (null !== $this->getCategories()) {
             /* @var Category $category */
             foreach ($this->getCategories() as $category) {
-                $categories[$category->getId()] = $category->findTranslationByLocale($this->locale)?->getTranslation();
+                if ($translatedCategory = $category->findTranslationByLocale($this->locale)) {
+                    $categories[$category->getId()] = $translatedCategory->getTranslation();
+                }
             }
         }
 
